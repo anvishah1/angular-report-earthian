@@ -1,9 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { OnboardingReport } from './report/onboarding-reports/onboarding-report';
+//import { OnboardingReport } from './report/onboarding-reports/onboarding-report';
+//import { MainMenu } from './main-menu/main-menu';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [OnboardingReport],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
