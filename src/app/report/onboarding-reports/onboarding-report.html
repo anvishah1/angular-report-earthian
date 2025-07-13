@@ -1,0 +1,45 @@
+<div class="dropdowns">
+    <label >District</label>
+    <select [(ngModel)]="selectedDistrict">
+        <option [ngValue]="null">All</option>
+        <option *ngFor="let district of districts" [ngValue]="district.id">
+            {{district.name }}
+        </option>
+    </select>
+
+    <label>School</label>
+    <select [(ngModel)]="selectedSchool">
+    <option [ngValue]="null">All</option>
+    <option *ngFor="let school of schools" [ngValue]="school.id">
+        {{school.name}}
+    </option>
+    </select>
+
+
+    <label>Team</label>
+    <select [(ngModel)]="selectedTeam">
+        <option [ngValue]="null">All</option>
+        <option *ngFor="let team of teams" [ngValue]="team.id">
+            {{team.name}}
+        </option>
+    </select>
+
+    <button>GO</button>
+    <div class="charts">
+        <!-- First Chart: Onboarded Data -->
+        <canvas baseChart
+          [data]="{ labels: onboardedChartLabels, datasets: onboardedChartData }"
+          [options]="chartOptions"
+          [type]=" 'bar' ">
+        </canvas>
+      
+        <!-- Second Chart: Orientation Data -->
+        <canvas baseChart
+          [data]="{labels: orientationChartLabels, datasets: orientationChartData }"
+          [options]="chartOptions"
+          [type]=" 'bar' ">
+        </canvas>
+      </div>
+      
+
+</div>
