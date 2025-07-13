@@ -1,32 +1,31 @@
 <div class="onboarding-dashboard-container">
 <div class="dropdowns">
-    <label >District</label>
-    <select [(ngModel)]="selectedDistrict">
-        <option [ngValue]="null">All</option>
-        <option *ngFor="let district of districts" [ngValue]="district.id">
-            {{district.name }}
-        </option>
-    </select>
+    <label>District</label>
+<select [(ngModel)]="selectedDistrict" (ngModelChange)="onDistrictChange()">
+  <option [ngValue]="null">All</option>
+  <option *ngFor="let district of districts" [ngValue]="district.id">
+    {{district.name}}
+  </option>
+</select>
 
-    <label>School</label>
-    <select [(ngModel)]="selectedSchool">
-    <option [ngValue]="null">All</option>
-    <option *ngFor="let school of schools" 
-        [ngValue]="school.id">
-        {{school.name}}
-    </option>
-    </select>
+<label>School</label>
+<select [(ngModel)]="selectedSchool" [disabled]="selectedDistrict === null" (ngModelChange)="onSchoolChange()">
+  <option [ngValue]="null">All</option>
+  <option *ngFor="let school of filteredSchools" [ngValue]="school.id">
+    {{school.name}}
+  </option>
+</select>
 
+<label>Team</label>
+<select [(ngModel)]="selectedTeam" [disabled]="selectedDistrict === null || selectedSchool === null">
+  <option [ngValue]="null">All</option>
+  <option *ngFor="let team of filteredTeams" [ngValue]="team.id">
+    {{team.name}}
+  </option>
+</select>
 
-    <label>Team</label>
-    <select [(ngModel)]="selectedTeam">
-        <option [ngValue]="null">All</option>
-        <option *ngFor="let team of teams" [ngValue]="team.id">
-            {{team.name}}
-        </option>
-    </select>
+<button (click)="filterData()">GO</button>
 
-    <button (click) = "filterData()">GO</button>
 </div>
 
     <div class="charts">

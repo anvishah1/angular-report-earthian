@@ -145,27 +145,6 @@
   .back-button:hover {
     background-color: #1e3d72;
   } 
-
-  /* .chart-container {
-    position: relative;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    margin-bottom: 30px;
-  }
-  
-  .chart-heading {
-    margin: 0 0 15px 0;
-    font-size: 18px;
-    color: #2c5aa0;
-    text-align: center;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-  }
-  
-   */
   /* Responsive design */
    @media (max-width: 768px) {
     .dropdowns {

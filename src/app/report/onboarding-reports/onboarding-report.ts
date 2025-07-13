@@ -165,5 +165,30 @@ getDistrictName(id: number): string {
   return district ? district.name : '';
 }
 
+get filteredSchools() {
+  if (this.selectedDistrict === null) {
+    return [];
+  }
+  return this.schools.filter(s => s.districtId === this.selectedDistrict);
+}
+
+get filteredTeams() {
+  if (this.selectedSchool === null) {
+    return [];
+  }
+  return this.teams.filter(t => t.schoolId === this.selectedSchool);
+}
+
+onDistrictChange() {
+  // Reset school and team selection when district changes
+  this.selectedSchool = null;
+  this.selectedTeam = null;
+}
+
+onSchoolChange() {
+  // Reset team selection when school changes
+  this.selectedTeam = null;
+}
+
 
 }
