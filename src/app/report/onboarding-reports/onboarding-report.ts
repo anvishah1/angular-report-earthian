@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {BaseChartDirective} from 'ng2-charts'
+import {BaseChartDirective} from 'ng2-charts';
+import { CommonModule } from '@angular/common';
+import { ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-onboarding-report',
   standalone: true,
-  imports: [FormsModule,BaseChartDirective],
+  imports: [CommonModule,FormsModule,BaseChartDirective],
   templateUrl: './onboarding-report.html',
   styleUrls: ['./onboarding-report.css']
 })
 export class OnboardingReport {
-  // Example: onboarding-report.component.ts
-
 districts = [
   { id: 1, name: 'District 1' },
   { id: 2, name: 'District 2' },
@@ -54,7 +54,7 @@ selectedTeam: number | null = null;
 // Chart labels and datasets for the first chart
 onboardedChartLabels = this.onboardedData.map(d => d.district);
 onboardedChartData = [
-  { data: this.onboardedData.map(d => d.schools), label: 'Schools Onboarded' },
+  { data: this.onboardedData.map(d => d.schools), label: 'Schools Onboarded' ,},
   { data: this.onboardedData.map(d => d.teachers), label: 'Teachers Onboarded' },
   { data: this.onboardedData.map(d => d.teams), label: 'Teams Onboarded' }
 ];
@@ -68,9 +68,102 @@ orientationChartData = [
 ];
 
 // Chart options
-chartOptions = {
+
+
+// Chart 1: Onboarded Data
+onboardedChartOptions: ChartOptions<'bar'> = {
   responsive: true,
-  // Add more options if needed
+  plugins: {
+    title: {
+      display: true,
+      text: "Total Onboarded Schools, Teachers and Teams",
+      align: 'center',
+      font: { size: 14, weight: "bold" },
+      color: "#333"
+    }
+  },
+  scales: {
+    x: {
+      title: {
+        display: true,
+        text: 'School',
+        font: { size: 14, weight: 'bold' }
+      }
+    },
+    y: {
+      title: {
+        display: true,
+        text: 'Count',
+        font: { size: 14, weight: 'bold' }
+      }
+    }
+  }
 };
+
+// Chart 2: Orientation Data
+orientationChartOptions: ChartOptions<'bar'> = {
+  responsive: true,
+  plugins: {
+    title: {
+      display: true,
+      text: "Schools, Teachers Attended Orientation & Registers by District",
+      align: 'center',
+      font: { size: 14, weight: "bold" },
+      color: "#333"
+    }
+  },
+  scales: {
+    x: {
+      title: {
+        display: true,
+        text: 'District',
+        font: { size: 14, weight: 'bold' }
+      }
+    },
+    y: {
+      title: {
+        display: true,
+        text: 'Count',
+        font: { size: 14, weight: 'bold' }
+      }
+    }
+  }
+};
+
+filterData() {
+  let filteredOnboarded = this.onboardedData;
+  let filteredOrientation = this.orientationData;
+
+  // Filter by district
+  if (this.selectedDistrict!=null) {
+      const DistrictName = this.getDistrictName(this.selectedDistrict);
+    filteredOnboarded = filteredOnboarded.filter(d => d.district === DistrictName);
+    filteredOrientation = filteredOrientation.filter(d => d.district === DistrictName);
+  }
+
+  // (Add similar logic for school and team if your data supports it)
+
+  // Update chart data and labels
+  this.onboardedChartLabels = filteredOnboarded.map(d => d.district);
+  this.onboardedChartData = [
+    { data: filteredOnboarded.map(d => d.schools), label: 'Schools Onboarded' },
+    { data: filteredOnboarded.map(d => d.teachers), label: 'Teachers Onboarded' },
+    { data: filteredOnboarded.map(d => d.teams), label: 'Teams Onboarded' }
+  ];
+
+  this.orientationChartLabels = filteredOrientation.map(d => d.district);
+  this.orientationChartData = [
+    { data: filteredOrientation.map(d => d.registered), label: 'Schools Registered' },
+    { data: filteredOrientation.map(d => d.attended), label: 'Teachers Attended Orientation' },
+    { data: filteredOrientation.map(d => d.afterOrientation), label: 'Schools Registered After Orientation' }
+  ];
+}
+
+// Helper to get district name by ID
+getDistrictName(id: number): string {
+  const district = this.districts.find(d => d.id === id);
+  return district ? district.name : '';
+}
+
 
 }

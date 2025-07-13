@@ -1,3 +1,4 @@
+<div class="onboarding-dashboard-container">
 <div class="dropdowns">
     <label >District</label>
     <select [(ngModel)]="selectedDistrict">
@@ -10,7 +11,8 @@
     <label>School</label>
     <select [(ngModel)]="selectedSchool">
     <option [ngValue]="null">All</option>
-    <option *ngFor="let school of schools" [ngValue]="school.id">
+    <option *ngFor="let school of schools" 
+        [ngValue]="school.id">
         {{school.name}}
     </option>
     </select>
@@ -24,22 +26,23 @@
         </option>
     </select>
 
-    <button>GO</button>
+    <button (click) = "filterData()">GO</button>
+</div>
+
     <div class="charts">
-        <!-- First Chart: Onboarded Data -->
         <canvas baseChart
           [data]="{ labels: onboardedChartLabels, datasets: onboardedChartData }"
-          [options]="chartOptions"
+          [options]="onboardedChartOptions"
           [type]=" 'bar' ">
         </canvas>
       
-        <!-- Second Chart: Orientation Data -->
         <canvas baseChart
           [data]="{labels: orientationChartLabels, datasets: orientationChartData }"
-          [options]="chartOptions"
+          [options]="orientationChartOptions"
           [type]=" 'bar' ">
         </canvas>
-      </div>
-      
+      <!-- </div> -->
 
+      <button class="back-button">Back</button>
+      
 </div>

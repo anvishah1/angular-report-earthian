@@ -1,6 +1,6 @@
 /* Dashboard CSS - Exact match to your mockup */
 
-.dropdowns {
+ .dropdowns {
     display: flex;
     align-items: center;
     gap: 20px;
@@ -71,8 +71,8 @@
   
   .charts {
     display: flex;
-    gap: 30px;
-    margin: 30px 20px;
+    gap: 40px;
+    margin: 50px 20px;
     align-items: flex-start;
   }
   
@@ -88,7 +88,7 @@
   }
   
   /* Chart container styling */
-  .chart-container {
+   .chart-container {
     position: relative;
     flex: 1;
     background-color: white;
@@ -107,7 +107,7 @@
   }
   
   /* Note section styling */
-  .note {
+   .note {
     margin: 20px;
     padding: 15px;
     background-color: #f8f9fa;
@@ -123,10 +123,10 @@
   
   .note strong {
     color: #333;
-  }
+  } 
   
   /* Back button styling */
-  .back-button {
+   .back-button {
     position: fixed;
     bottom: 30px;
     right: 30px;
@@ -144,10 +144,30 @@
   
   .back-button:hover {
     background-color: #1e3d72;
+  } 
+
+  /* .chart-container {
+    position: relative;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
   }
   
+  .chart-heading {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    color: #2c5aa0;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+  
+   */
   /* Responsive design */
-  @media (max-width: 768px) {
+   @media (max-width: 768px) {
     .dropdowns {
       flex-direction: column;
       align-items: flex-start;
@@ -177,13 +197,13 @@
   }
   
   /* Override any default Chart.js styles */
-  .charts canvas {
+   .charts canvas {
     width: 100% !important;
     height: 400px !important;
   }
-  
+   
   /* Additional styling for better visual match */
-  body {
+   body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
     margin: 0;
@@ -197,9 +217,9 @@
     min-height: 100vh;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
-  
+   
   /* Legend styling for charts */
-  .chart-legend {
+   .chart-legend {
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -217,12 +237,12 @@
     width: 15px;
     height: 15px;
     border-radius: 2px;
-  }
+  } 
   
   /* Specific styling for your chart colors to match the mockup */
-  .chart-legend-schools { background-color: green; }
+   .chart-legend-schools { background-color: green; }
   .chart-legend-teachers { background-color: #00BCD4; }
   .chart-legend-teams { background-color: #FFC107; }
   .chart-legend-registered { background-color: #4A148C; }
   .chart-legend-orientation { background-color: #00BCD4; }
-  .chart-legend-after-orientation { background-color: #FFC107; }
+  .chart-legend-after-orientation { background-color: #FFC107; } 
