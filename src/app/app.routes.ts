@@ -21,6 +21,11 @@ export const routes: Routes = [
     path: 'overall-submissions',
     loadComponent: () => import('./report/overall-submissions/overall-submissions').then(m => m.OverallSubmissions)
  },
+ {
+  path: 'target-insights',
+  loadComponent: () => import('./report/target-insights/target-insights').then(m => m.TargetInsights)
+},
+
   
   // ...add more routes as needed
 ];

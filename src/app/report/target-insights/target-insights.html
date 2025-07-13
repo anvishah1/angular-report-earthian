@@ -1,0 +1,11 @@
+<div class="target-insights-container">
+    <div class="chart">
+        <canvas baseChart
+        [data]="{labels: targetInsightLabels, datasets: targetInsightData}"
+        [options]="targetInsightOptions"
+        [type]=" 'bar' ">
+        </canvas>
+
+        <button class="back-button">Back</button>
+    </div>
+</div>
