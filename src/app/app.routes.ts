@@ -10,10 +10,17 @@ export const routes: Routes = [
   {
     path: 'onboarding-report',
     loadComponent: () => import('./report/onboarding-reports/onboarding-report').then(m => m.OnboardingReport)
-  }
-//   {
-//     path: 'your-new-report',
-//     loadComponent: () => import('./report/your-new-report/your-new-report.component').then(m => m.YourNewReport)
-//   },
+  },
+
+  {
+   path: 'theme-team',
+     loadComponent: () => import('./report/theme-team/theme-team').then(m => m.Themeteam)
+  },
+
+  {
+    path: 'overall-submissions',
+    loadComponent: () => import('./report/overall-submissions/overall-submissions').then(m => m.OverallSubmissions)
+ },
+  
   // ...add more routes as needed
 ];
