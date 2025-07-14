@@ -25,7 +25,10 @@ export const routes: Routes = [
   path: 'target-insights',
   loadComponent: () => import('./report/target-insights/target-insights').then(m => m.TargetInsights)
 },
-
+{
+  path: 'theme-avg',
+  loadComponent: () => import('./report/theme-avg/theme-avg').then(m => m.ThemeAvg)
+},
   
   // ...add more routes as needed
 ];
