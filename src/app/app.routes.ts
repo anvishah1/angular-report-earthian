@@ -29,6 +29,10 @@ export const routes: Routes = [
   path: 'theme-avg',
   loadComponent: () => import('./report/theme-avg/theme-avg').then(m => m.ThemeAvg)
 },
+{
+  path: 'submissions-evaluation',
+  loadComponent: () => import('./report/submissions-evaluation/submissions-evaluation').then(m => m.SubmissionEvaluation)
+},
   
   // ...add more routes as needed
 ];

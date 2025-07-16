@@ -24,6 +24,7 @@ targetInsightLabels = ['Target Submissions', 'Actual Submissions'];
 
 targetInsightOptions: ChartOptions<'bar'> = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     title: {
       display: true,
