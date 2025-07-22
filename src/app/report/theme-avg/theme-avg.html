@@ -11,14 +11,21 @@
         <button (click)="onGoClick()">GO</button>
     </div>
 
-
-
-<div class="chart">
+    <div *ngIf="loading" class="loading-msg">
+        Loading...
+      </div>
+      <div *ngIf="error" class="error-msg">
+        {{ error }}
+      </div>
+    
+    <div class="chart">
+    <div class="chart-container" *ngIf="!loading && !error && chartLabels.length">
     <canvas baseChart
     [data]="{labels: chartLabels, datasets: chartData}"
     [options]="chartOptions"
     [type]=" 'bar' " >
 </canvas>
+</div>
 </div>
 
 <button class="back-button">Back</button>
