@@ -1,38 +1,30 @@
-import { Component } from '@angular/core';
-import { FormsModule } from "@angular/forms";
-import { BaseChartDirective } from "ng2-charts";
-import { CommonModule } from "@angular/common";
-import { ChartOptions } from "chart.js";
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BaseChartDirective } from 'ng2-charts';
+import { CommonModule } from '@angular/common';
+import { ChartOptions, ChartDataset } from 'chart.js';
+import { ThemeWiseTeamService } from './theme-team.service';
 
 @Component({
-  selector: 'app-theme-Team-report',
+  selector: 'app-theme-team-report',
   standalone: true,
-  imports: [CommonModule,BaseChartDirective,FormsModule],
+  imports: [CommonModule, BaseChartDirective, FormsModule],
   templateUrl: './theme-team.html',
-  styleUrls: ["./theme-team.css"]
+  styleUrls: ['./theme-team.css']
 })
-export class Themeteam {
-  districts=[
-    { id: 1, name: 'District 1' },
-    { id: 2, name: 'District 2' },
-    { id: 3, name: 'District 3' },
-    { id: 4, name: 'District 4' }
+export class Themeteam implements OnInit {
+  districts = [
+    { id: '1', name: 'District 1' },
+    { id: '2', name: 'District 2' },
+    { id: '3', name: 'District 3' },
+    { id: '4', name: 'District 4' }
   ];
-
-  schools = [
-    { id: 1, name: 'School A', districtId: 1, Theme_Air: 10, Theme_Water: 5, Theme_Biodiversity: 8 },
-    { id: 2, name: 'School B', districtId: 1, Theme_Air: 7, Theme_Water: 12, Theme_Biodiversity: 6 },
-    { id: 3, name: 'School C', districtId: 2, Theme_Air: 15, Theme_Water: 9, Theme_Biodiversity: 11 },
-    { id: 4, name: 'School D', districtId: 3, Theme_Air: 4, Theme_Water: 7, Theme_Biodiversity: 3 },
-    { id: 5, name: 'School E', districtId: 4, Theme_Air: 11, Theme_Water: 8, Theme_Biodiversity: 9 },
-    { id: 5, name: 'School F', districtId: 4, Theme_Air: 10, Theme_Water: 8, Theme_Biodiversity: 9 }
-  ];
-
-  selectedDistrict: number|null = null;
-  
+  selectedDistrict: string | null = null;
 
   themeWiseLabels: string[] = [];
-  themeWiseData: any[] = [];
+  themeWiseData: ChartDataset<'bar'>[] = [];
+  loading = false;
+  error = '';
 
   themeWiseOptions: ChartOptions<'bar'> = {
     responsive: true,
@@ -58,35 +50,69 @@ export class Themeteam {
           display: true,
           text: 'Number of Teams',
           font: { size: 14, weight: 'bold' }
-        }
+        },
+        min: 0
       }
     }
   };
 
+  constructor(private themeTeamService: ThemeWiseTeamService) {}
+
   ngOnInit() {
-    this.updateChartData();
-  }
-
-  get filteredSchools() {
-    if(this.selectedDistrict=== null){
-      return this.schools;
-    }
-    return this.schools.filter(s => s.districtId === this.selectedDistrict);
-  }
-
-  updateChartData() {
-    const schools=this.filteredSchools;
-    this.themeWiseLabels = schools.map(s=>s.name);
-    this.themeWiseData =[
-      {data: schools.map(s=> s.Theme_Air), label: 'Theme_Air'},
-      {data: schools.map(s=> s.Theme_Water), label: 'Theme_Water'},
-     {data: schools.map(s=> s.Theme_Biodiversity), label: 'Theme_Biodiversity'},
-    ];
+    this.loadChartData();
   }
 
   onGoClick() {
-    this.updateChartData();
+    this.loadChartData();
   }
 
-}
+  loadChartData() {
+    this.loading = true;
+    this.error = '';
+    this.themeWiseLabels = [];
+    this.themeWiseData = [];
 
+    this.themeTeamService.getThemeWise(this.selectedDistrict).subscribe({
+      next: (apiData) => {
+        if (apiData?.success && Array.isArray(apiData.data)) {
+          // 1. Get all unique theme_ids (and optionally their "display name" from another source if you have)
+          const themeIdSet = new Set<string>();
+          apiData.data.forEach((school: any) => {
+            if (school.theme_count) {
+              Object.keys(school.theme_count).forEach(tid => themeIdSet.add(tid));
+            }
+          });
+          const allThemes = Array.from(themeIdSet);
+
+          // 2. X-axis labels: school names
+          this.themeWiseLabels = apiData.data.map((sch: any) => sch.school_name);
+
+          // 3. For each theme, get an array of team counts for each school (0 if theme not present)
+          this.themeWiseData = allThemes.map((themeId, idx) => ({
+            type: 'bar',
+            label: themeId, // ideally replace with theme name mapping
+            data: apiData.data.map((sch: any) => sch.theme_count?.[themeId] ?? 0),
+            backgroundColor: this.pickColor(idx)
+          }));
+
+          this.error = '';
+        } else {
+          this.error = 'API response format not as expected.';
+        }
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to load data.';
+        this.loading = false;
+        console.error('API load error:', err);
+      }
+    });
+  }
+
+  pickColor(idx: number) {
+    const colors = [
+      '#6baed6', '#f4a582', '#bcbddc', '#fd8d3c', '#e5c494', '#1b9e77', '#7570b3'
+    ];
+    return colors[idx % colors.length];
+  }
+}

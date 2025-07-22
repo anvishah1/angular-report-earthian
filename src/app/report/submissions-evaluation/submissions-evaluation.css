@@ -10,53 +10,63 @@
   
   .filter-form {
     display: flex;
-    align-items: flex-end;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: hsl(0, 0%, 100%);
+    border: 2px solid #333;
+    margin: 20px;
+    border-radius: 4px;
   }
   
   .dropdown-label {
-    font-size: 1rem;
-    color: #263247;
-    margin-right: 0.3rem;
-    font-weight: 600;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    margin-right: 8px;
+    margin-left: 30px;
   }
   
   .dropdown-select {
-    min-width: 145px;
-    padding: 0.42rem 0.65rem;
-    font-size: 0.97rem;
-    background: #f1f5f8;
-    border-radius: 6px;
-    border: 1px solid #bdd6ef;
-    color: #263247;
-    outline: none;
-    transition: border-color 0.2s;
+    padding: 8px 12px;
+    border: 2px solid #333;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+    min-width: 120px;
+    height: 36px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 12px;
+    padding-right: 30px;
   }
   
   .dropdown-select:focus {
-    border-color: #4897c5;
-    box-shadow: 0 0 2px 1px #b3cce6;
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
   }
   
   .go-btn {
-    padding: 0.48rem 1.34rem;
-    background: linear-gradient(90deg,#3aa5e5 40%,#004e7c 100%);
-    color: #fff;
+    background-color: #2c5aa0;
+    color: white;
     border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 1rem;
-    box-shadow: 0 2px 8px 0 #90bde85c;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
     cursor: pointer;
-    transition: background 0.15s, box-shadow 0.15s;
+    height: 36px;
+    margin-left: 1000px;
   }
   
   .go-btn:hover,
   .go-btn:focus {
-    background: linear-gradient(90deg,#4897c5 50%,#3575a1 100%);
-    box-shadow: 0 4px 20px #bfdcf3aa;
-    outline: none;
+    background-color: #1e3d72;
   }
   
   .chart-section {
@@ -80,6 +90,26 @@
     padding: 0.5rem 0.9rem;
     display: inline-block;
   }
+
+  .back-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #2c5aa0;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+  }
+  
+  .back-button:hover {
+    background-color: #1e3d72;
+  } 
   
   @media (max-width: 640px) {
     .overall-submissions-container {

@@ -11,9 +11,16 @@
         <button (click)="onGoClick()">GO</button>
     </div>
 
+    <div *ngIf="loading" class="loading-msg">
+        Loading...
+      </div>
+      <div *ngIf="error" class="error-msg">
+        {{ error }}
+      </div>
+    
 
     <div class="chart">
-        <div class="chart-container">
+        <div class="chart-container" *ngIf="!loading && !error && themeWiseLabels.length">
         <canvas baseChart
         [data]="{labels: themeWiseLabels, datasets: themeWiseData }"
         [options]="themeWiseOptions"

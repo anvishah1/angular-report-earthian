@@ -1,17 +1,15 @@
 <div class="target-insights-container">
     <div class="chart-container">
   
-      <!-- Loading State -->
       <div *ngIf="loading" class="loading-msg">
         Loading...
       </div>
   
-      <!-- Error State -->
       <div *ngIf="!loading && error" class="error-msg">
         {{ error }}
       </div>
   
-      <!-- Chart (only show when not loading and no error) -->
+
       <div *ngIf="!loading && !error">
         <canvas baseChart
           [data]="{ labels: targetInsightLabels, datasets: targetInsightData }"
@@ -19,8 +17,7 @@
           [type]="'bar'">
         </canvas>
       </div>
-  
-      <!-- Back Button: always visible, or show only when not loading (your call) -->
+
       <button class="back-button">Back</button>
   
     </div>

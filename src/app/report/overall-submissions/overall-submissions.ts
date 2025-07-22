@@ -1,8 +1,10 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartOptions, ChartType, ChartDataset } from 'chart.js';
+import { ChartOptions, ChartDataset } from 'chart.js';
+import { OverallSubmissionsService } from './overall-submissions.service';
 
 @Component({
   selector: 'app-overall-submissions',
@@ -12,60 +14,35 @@ import { ChartOptions, ChartType, ChartDataset } from 'chart.js';
   styleUrls: ['./overall-submissions.css']
 })
 export class OverallSubmissions implements OnInit {
-  districts = [
-    { id: 1, name: 'District 1' },
-    { id: 2, name: 'District 2' },
-    { id: 3, name: 'District 3' }
-  ];
+  loading = false;
+  error = '';
 
-  schools = [
-    { id: 1, name: 'School A', districtId: 1 },
-    { id: 2, name: 'School B', districtId: 1 },
-    { id: 3, name: 'School C', districtId: 2 },
-    { id: 4, name: 'School D', districtId: 3 },
-    { id: 5, name: 'School E', districtId: 3 }
+  districts: { id: string, name: string }[] = []; // Fill from API if needed
+  selectedDistrict: string | null = null;
 
-  ];
-
-  // Example data; in production, fetch from API
-  submissions = [
-    { schoolId: 1, total: 10, completion: 70 },
-    { schoolId: 2, total: 15, completion: 80 },
-    { schoolId: 3, total: 12, completion: 75 },
-    { schoolId: 4, total: 7, completion: 63 },
-    { schoolId: 5, total: 14, completion: 72 }
-  ];
-
-  selectedDistrict: number | null = null;
-  selectedSchool: number | null = null;
-  selectedTeam: number | null = null;
-
-  // Chart data
   chartLabels: string[] = [];
-  barData: ChartDataset<'bar'>[] = [];
-  lineData: ChartDataset<'line'>[] = [];
   chartData: ChartDataset[] = [];
   chartOptions: ChartOptions = {
     responsive: true,
     plugins: {
       title: {
         display: true,
-        text: 'Number of Submissions per School & Percentage of Completed Submissions',
+        text: 'Number of Submissions per School',
         align: 'center',
         font: { size: 16, weight: 'bold' },
         color: '#333'
       },
-      legend: { display: false }
+      legend: { display: true }
     },
     scales: {
       y: {
-        title: { display: true, text: 'Total Submissions', font: { size: 14, weight: 'bold' } }
+        title: { display: true, text: 'Total Submissions', font: { size: 14, weight: 'bold' } },
+        beginAtZero: true
       },
       y1: {
         position: 'right',
-        title: { display: true, text: 'Completion Percentage', font: { size: 14, weight: 'bold' } },
-        min: 0,
-        max: 100,
+        title: { display: true, text: 'Completion %', font: { size: 14, weight: 'bold' } },
+        min: 0, max: 100,
         grid: { drawOnChartArea: false }
       },
       x: {
@@ -74,64 +51,71 @@ export class OverallSubmissions implements OnInit {
     }
   };
 
+  constructor(private overallService: OverallSubmissionsService) {}
+
   ngOnInit() {
-    this.updateChart();
-  }
-
-  get filteredSchools() {
-    if (!this.selectedDistrict) return this.schools;
-    return this.schools.filter(s => s.districtId === this.selectedDistrict);
-  }
-
-  updateChart() {
-    // Filter submissions based on selected district and school
-    let filtered = this.submissions;
-    if (this.selectedDistrict) {
-      const schoolIds = this.schools.filter(s => s.districtId === this.selectedDistrict).map(s => s.id);
-      filtered = filtered.filter(sub => schoolIds.includes(sub.schoolId));
-    }
-    if (this.selectedSchool) {
-      filtered = filtered.filter(sub => sub.schoolId === this.selectedSchool);
-    }
-
-    const schoolNames = filtered.map(sub => {
-      const school = this.schools.find(s => s.id === sub.schoolId);
-      return school ? school.name : '';
-    });
-
-    this.chartLabels = schoolNames;
-    this.barData = [
-      {
-        type: 'bar',
-        label: 'Total Submissions',
-        data: filtered.map(sub => sub.total),
-        backgroundColor: '#6baed6',
-        order: 2
-      }
-    ];
-    this.lineData = [
-      {
-        type: 'line',
-        label: 'Completion Percentage',
-        data: filtered.map(sub => sub.completion),
-        yAxisID: 'y1',
-        borderColor: '#d62728',
-        backgroundColor: '#d62728',
-        fill: false,
-        tension: 0.4,
-        pointRadius: 5,
-        pointBackgroundColor: '#d62728',
-        order: 1
-      }
-    ];
-    this.chartData = [...this.barData, ...this.lineData];
+    this.loadChart();
   }
 
   onGoClick() {
-    this.updateChart();
+    this.loadChart();
   }
 
-  onBack() {
-    // Implement navigation logic if needed
+  loadChart() {
+    this.loading = true;
+    this.error = '';
+    this.chartLabels = [];
+    this.chartData = [];
+
+    this.overallService.getOverallSubmissions(this.selectedDistrict).subscribe({
+      next: (apiData) => {
+        if (apiData?.success && Array.isArray(apiData.data)) {
+          // Only keep schools with at least 1 submission (change/remove filter for all)
+          const filtered = apiData.data.filter((sch: any) => sch.total_submissions > 0);
+
+          // Optionally: to show top 10 by submissions
+          // const filtered = apiData.data
+          //   .sort((a: any, b: any) => b.total_submissions - a.total_submissions)
+          //   .slice(0, 10);
+
+          this.chartLabels = filtered.map((sch: any) => sch.school_name);
+
+          const totals = filtered.map((sch: any) => sch.total_submissions);
+          const completions = filtered.map((sch: any) => sch.completion_percentage);
+
+          this.chartData = [
+            {
+              type: 'bar',
+              label: 'Total Submissions',
+              data: totals,
+              backgroundColor: '#6baed6',
+              order: 2
+
+            },
+            {
+              type: 'line',
+              label: 'Completion %',
+              data: completions,
+              yAxisID: 'y1',
+              borderColor: '#d62728',
+              backgroundColor: '#d62728',
+              fill: false,
+              tension: 0.3,
+              pointRadius: 5,
+              pointBackgroundColor: '#d62728',
+              order: 1
+            }
+          ];
+        } else {
+          this.error = 'API response format not as expected.';
+        }
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to load submissions data';
+        this.loading = false;
+        console.error('API error:', err);
+      }
+    });
   }
 }
