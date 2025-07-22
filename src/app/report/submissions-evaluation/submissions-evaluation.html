@@ -1,0 +1,28 @@
+<div class="submission-evaluation">
+    <form class="filter-form" (ngSubmit)="onGoClick()">
+      <label for="districtSelect" class="dropdown-label">District</label>
+      <select
+        id="districtSelect"
+        [(ngModel)]="selectedDistrict"
+        name="district"
+        class="dropdown-select"
+      >
+        <option [ngValue]="null">All</option>
+        <option *ngFor="let d of districts" [ngValue]="d.id">
+          {{ d.name }}
+        </option>
+      </select>
+      <button type="button" (click)="onGoClick()" class="go-btn">GO</button>
+    </form>
+  
+    <div class="chart-section" *ngIf="chartLabels.length" style="max-width: 700px; margin: 2rem auto;">
+      <canvas
+        baseChart
+        [data]="{ labels: chartLabels, datasets: chartData }"
+        [options]="chartOptions"
+        [type]="'bar'"
+      ></canvas>
+    </div>
+  
+  </div>
+  

@@ -1,0 +1,101 @@
+.submissions-evaluation {
+    max-width: 640px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 18px 0 rgba(44,62,80,0.09), 0 0.5px 1.5px rgba(0,0,0,0.03);
+    padding: 2.5rem 2rem 1.5rem 2rem;
+    margin: 3rem auto 0 auto;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  }
+  
+  .filter-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .dropdown-label {
+    font-size: 1rem;
+    color: #263247;
+    margin-right: 0.3rem;
+    font-weight: 600;
+  }
+  
+  .dropdown-select {
+    min-width: 145px;
+    padding: 0.42rem 0.65rem;
+    font-size: 0.97rem;
+    background: #f1f5f8;
+    border-radius: 6px;
+    border: 1px solid #bdd6ef;
+    color: #263247;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  
+  .dropdown-select:focus {
+    border-color: #4897c5;
+    box-shadow: 0 0 2px 1px #b3cce6;
+  }
+  
+  .go-btn {
+    padding: 0.48rem 1.34rem;
+    background: linear-gradient(90deg,#3aa5e5 40%,#004e7c 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px 0 #90bde85c;
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s;
+  }
+  
+  .go-btn:hover,
+  .go-btn:focus {
+    background: linear-gradient(90deg,#4897c5 50%,#3575a1 100%);
+    box-shadow: 0 4px 20px #bfdcf3aa;
+    outline: none;
+  }
+  
+  .chart-section {
+    background: #f7fafc;
+    border-radius: 10px;
+    box-shadow: 0 1px 5px 0 rgba(44,73,110,0.10);
+    padding: 2rem 1rem 1.5rem 1rem;
+    margin-bottom: 32px;
+  }
+  
+  .note-section {
+    margin-top: 15px;
+    text-align: left;
+  }
+  
+  .note-section small {
+    color: #8c99aa;
+    font-size: 0.92rem;
+    background: #f6f8fb;
+    border-radius: 4px;
+    padding: 0.5rem 0.9rem;
+    display: inline-block;
+  }
+  
+  @media (max-width: 640px) {
+    .overall-submissions-container {
+      padding: 1.2rem 0.7rem;
+      max-width: 95vw;
+    }
+    .chart-section {
+      padding: 1rem 0.3rem 1rem 0.3rem;
+    }
+    .filter-form {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.7rem;
+    }
+    .go-btn {
+      width: 100%;
+    }
+  }
+  

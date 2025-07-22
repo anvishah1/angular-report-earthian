@@ -1,0 +1,25 @@
+<div class="theme-avg">
+    <div class="dropdown">
+        <label for="">Districts</label>
+        <select [(ngModel)]="selectedDistrict">
+            <option [ngValue]="null">All</option>
+            <option *ngFor="let district of districts"  [ngValue]="district.id">
+                {{district.name}}
+            </option>
+        </select>
+
+        <button (click)="onGoClick()">GO</button>
+    </div>
+
+
+
+<div class="chart">
+    <canvas baseChart
+    [data]="{labels: chartLabels, datasets: chartData}"
+    [options]="chartOptions"
+    [type]=" 'bar' " >
+</canvas>
+</div>
+
+<button class="back-button">Back</button>
+</div>
