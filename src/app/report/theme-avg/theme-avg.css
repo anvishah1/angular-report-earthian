@@ -85,12 +85,12 @@
   
   .chart {
     width: 100%;
-    max-width: 700px;         /* Increased from 430px */
-    margin: 60px auto 0 auto; /* Center horizontally */
+    max-width: 700px;         
+    margin: 60px auto 0 auto; 
     background: #fff;
     border: 1px transparent #ddd;
-    border-radius: 8px;       /* Slightly more rounded */
-    padding: 40px 36px; /* More padding */ /* Slightly stronger shadow */
+    border-radius: 8px;      
+    padding: 40px 36px; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -99,13 +99,12 @@
   .chart canvas {
     flex: 1;
     max-width: 100%;
-    width: 900px !important;    /* Make canvas larger */
-    height: 500px !important;   /* Make canvas taller */
+    width: 900px !important;    
+    height: 500px !important;  
     border: 1px transparent #ddd;
     border-radius: 8px;
     background-color: white;
-    padding: 0;                 /* Remove extra padding */
-    /* box-shadow: 0 2px 8px rgba(0,0,0,0.10); */
+    padding: 0;                 
     margin: 0 auto;
     display: block;
   }

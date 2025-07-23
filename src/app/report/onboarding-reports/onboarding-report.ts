@@ -47,12 +47,12 @@ orientationData = [
   { district: 'District 4', registered: 210, attended: 130, afterOrientation: 200 }
 ];
 
-// For dropdown selection tracking
+
 selectedDistrict: number | null = null;
 selectedSchool: number | null = null;
 selectedTeam: number | null = null;
 
-// Chart labels and datasets for the first chart
+
 onboardedChartLabels = this.onboardedData.map(d => d.district);
 onboardedChartData = [
   { data: this.onboardedData.map(d => d.schools), label: 'Schools Onboarded' ,},
@@ -60,7 +60,7 @@ onboardedChartData = [
   { data: this.onboardedData.map(d => d.teams), label: 'Teams Onboarded' }
 ];
 
-// Chart labels and datasets for the second chart
+
 orientationChartLabels = this.orientationData.map(d => d.district);
 orientationChartData = [
   { data: this.orientationData.map(d => d.registered), label: 'Schools Registered' },
@@ -68,7 +68,7 @@ orientationChartData = [
   { data: this.orientationData.map(d => d.afterOrientation), label: 'Schools Registered After Orientation' }
 ];
 
-// Chart options
+
 
 
 // Chart 1: Onboarded Data
@@ -135,16 +135,14 @@ filterData() {
   let filteredOnboarded = this.onboardedData;
   let filteredOrientation = this.orientationData;
 
-  // Filter by district
+  
   if (this.selectedDistrict!=null) {
       const DistrictName = this.getDistrictName(this.selectedDistrict);
     filteredOnboarded = filteredOnboarded.filter(d => d.district === DistrictName);
     filteredOrientation = filteredOrientation.filter(d => d.district === DistrictName);
   }
 
-  // (Add similar logic for school and team if your data supports it)
 
-  // Update chart data and labels
   this.onboardedChartLabels = filteredOnboarded.map(d => d.district);
   this.onboardedChartData = [
     { data: filteredOnboarded.map(d => d.schools), label: 'Schools Onboarded' },
@@ -160,7 +158,7 @@ filterData() {
   ];
 }
 
-// Helper to get district name by ID
+
 getDistrictName(id: number): string {
   const district = this.districts.find(d => d.id === id);
   return district ? district.name : '';
@@ -181,13 +179,13 @@ get filteredTeams() {
 }
 
 onDistrictChange() {
-  // Reset school and team selection when district changes
+
   this.selectedSchool = null;
   this.selectedTeam = null;
 }
 
 onSchoolChange() {
-  // Reset team selection when school changes
+
   this.selectedTeam = null;
 }
 

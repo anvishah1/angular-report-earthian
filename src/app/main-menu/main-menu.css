@@ -3,8 +3,8 @@
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    justify-content: flex-start;  /* Align to top */
-    padding-top: 2.5rem;          /* Optional: add some space from the top */
+    justify-content: flex-start;  
+    padding-top: 2.5rem;          
     background: #fff;
     font-family: Arial, Helvetica, sans-serif;
   }

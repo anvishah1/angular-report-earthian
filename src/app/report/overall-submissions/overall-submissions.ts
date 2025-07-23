@@ -91,14 +91,8 @@ export class OverallSubmissions implements OnInit {
     this.overallService.getOverallSubmissions(this.selectedDistrict).subscribe({
       next: (apiData) => {
         if (apiData?.success && Array.isArray(apiData.data)) {
-          // Only keep schools with at least 1 submission (change/remove filter for all)
+
           const filtered = apiData.data.filter((sch: any) => sch.total_submissions > 0);
-
-          // Optionally: to show top 10 by submissions
-          // const filtered = apiData.data
-          //   .sort((a: any, b: any) => b.total_submissions - a.total_submissions)
-          //   .slice(0, 10);
-
           this.chartLabels = filtered.map((sch: any) => sch.school_name);
 
           const totals = filtered.map((sch: any) => sch.total_submissions);

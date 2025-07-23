@@ -10,12 +10,12 @@
   
   /* Chart area centered */
   .chart-container {
-    width: 100vw;        /* or a fixed value like 900px */
+    width: 100vw;       
     max-width: 1200px;
     min-width: 700px;
     margin: 0 auto;
     background: #fff;
-    /* ... (other styling) */
+
   }
   
   .chart-container canvas {
@@ -26,13 +26,10 @@
     min-height: 400px !important;
     display: block;
     margin: 0 auto;
-    /* ... (other styling) */
+
   }
   
-              
-    
-  
-  /* Chart title styling (if using HTML heading above chart) */
+          
   .chart-title {
     font-size: 18px;
     color: #333;
@@ -41,7 +38,7 @@
     text-align: center;
   }
   
-  /* Back button styling */
+
   .back-button {
     position: fixed;
     bottom: 32px;

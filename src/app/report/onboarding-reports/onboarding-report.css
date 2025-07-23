@@ -1,4 +1,4 @@
-/* Dashboard CSS - Exact match to your mockup */
+
 
  .dropdowns {
     display: flex;
@@ -106,25 +106,7 @@
     text-align: center;
   }
   
-  /* Note section styling */
-   .note {
-    margin: 20px;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-left: 4px solid #007bff;
-    border-radius: 4px;
-  }
-  
-  .note p {
-    margin: 0;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .note strong {
-    color: #333;
-  } 
-  
+
   /* Back button styling */
    .back-button {
     position: fixed;
