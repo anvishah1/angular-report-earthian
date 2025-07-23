@@ -96,7 +96,7 @@ export class TargetInsights implements OnInit {
       }
     });
   }
-  onBack(){
-    this.router.navigate(["/"]);
+  onBack() {
+    this.router.navigate(['/']);
   }
-}  
+  }
