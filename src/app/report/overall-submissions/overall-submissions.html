@@ -1,12 +1,14 @@
 <div class="overall-submissions-container">
-  <div class="dropdowns">
+  <div class="dropdown">
+    <div class="dropdown-left">
     <label>District</label>
-    <select [(ngModel)]="selectedDistrict">
+    <select [(ngModel)]="selectedDistrict" name="district">
       <option [ngValue]="null">All</option>
-      <option *ngFor="let district of districts" [ngValue]="district.id">
-        {{ district.name }}
+      <option *ngFor="let d of districts" [ngValue]="d.id">
+        {{ d.name }}
       </option>
     </select>
+  </div>
     <button (click)="onGoClick()" [disabled]="loading">GO</button>
   </div>
 
@@ -17,6 +19,7 @@
     {{ error }}
   </div>
 
+  <div class="chart">
   <div class="chart-container" *ngIf="!loading && !error && chartLabels.length">
     <canvas baseChart
       [data]="{ labels: chartLabels, datasets: chartData }"
@@ -25,5 +28,6 @@
     </canvas>
   </div>
 
-  <button class="back-button">Back</button>
+  <button class="back-button" (click)="onBack()">Back</button>
+</div>
 </div>

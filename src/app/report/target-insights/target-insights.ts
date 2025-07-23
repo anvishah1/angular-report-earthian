@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChartOptions } from 'chart.js';
 import { TargetInsightsService } from './target-insight.service'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-target-insights',
@@ -49,7 +50,9 @@ export class TargetInsights implements OnInit {
     }
   };
 
-  constructor(private insightsService: TargetInsightsService) {}
+  constructor(
+    private insightsService: TargetInsightsService,
+    private router: Router) {}
 
   ngOnInit() {
     this.insightsService.getTargetInsights().subscribe({
@@ -92,5 +95,8 @@ export class TargetInsights implements OnInit {
         console.error('API load error:', err);
       }
     });
+  }
+  onBack(){
+    this.router.navigate(["/"]);
   }
 }  

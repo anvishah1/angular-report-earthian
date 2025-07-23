@@ -1,10 +1,12 @@
-// 
+
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartOptions, ChartDataset } from 'chart.js';
 import { SubmissionsEvaluationService } from './submissions-evaluation.service';
+import { DistrictsService } from '../districts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'submissions-evaluation',
@@ -60,20 +62,24 @@ export class SubmissionEvaluation implements OnInit {
     }
   };
 
-  constructor(private submissionsService: SubmissionsEvaluationService) {}
+  constructor(
+    private submissionsService: SubmissionsEvaluationService,
+    private districtsService: DistrictsService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.loadDistricts(); // Optionally from API
+    this.loadDistricts(); 
     this.updateChart();
   }
 
   loadDistricts() {
-    // If you have an endpoint: this.submissionsService.getDistricts().subscribe(...)
-    this.districts = [
-      { id: '1', name: 'District 1' },
-      { id: '2', name: 'District 2' },
-      { id: '3', name: 'District 3' }
-    ];
+    this.districtsService.getDistricts().subscribe({
+      next: (resp) => {
+        this.districts = resp.data.map((d:any ) => ({ id: d.id, name: d.name}));
+      },
+      error: () => {}
+    });
   }
 
   updateChart() {
@@ -84,10 +90,6 @@ export class SubmissionEvaluation implements OnInit {
 
     this.submissionsService.getEvaluation(this.selectedDistrict).subscribe({
       next: (apiData) => {
-        // Example expected apiData.data:
-        // [
-        //   { school_id: '...', school_name: '...', total_submissions: 12, completion_percentage: 75 }
-        // ]
         if (apiData?.success && Array.isArray(apiData.data)) {
           this.chartLabels = apiData.data.map((school: any) => school.school_name);
 
@@ -130,5 +132,9 @@ export class SubmissionEvaluation implements OnInit {
 
   onGoClick() {
     this.updateChart();
+  }
+
+  onBack(){
+    this.router.navigate(["/"]);
   }
 }

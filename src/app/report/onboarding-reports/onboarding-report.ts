@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import {BaseChartDirective} from 'ng2-charts';
 import { CommonModule } from '@angular/common';
 import { ChartOptions } from 'chart.js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-onboarding-report',
@@ -188,6 +189,10 @@ onDistrictChange() {
 onSchoolChange() {
   // Reset team selection when school changes
   this.selectedTeam = null;
+}
+
+onBack(){
+
 }
 
 

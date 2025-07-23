@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartOptions, ChartDataset } from 'chart.js';
 import { OverallSubmissionsService } from './overall-submissions.service';
+import { DistrictsService } from '../districts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overall-submissions',
@@ -17,7 +19,7 @@ export class OverallSubmissions implements OnInit {
   loading = false;
   error = '';
 
-  districts: { id: string, name: string }[] = []; // Fill from API if needed
+  districts: { id: string, name: string }[] = []; 
   selectedDistrict: string | null = null;
 
   chartLabels: string[] = [];
@@ -51,16 +53,35 @@ export class OverallSubmissions implements OnInit {
     }
   };
 
-  constructor(private overallService: OverallSubmissionsService) {}
+  constructor(
+    private overallService: OverallSubmissionsService,
+    private districtsSerivce: DistrictsService,
+    private router: Router ) {}
 
   ngOnInit() {
+    this.loadDistricts();
     this.loadChart();
+  }
+
+  loadDistricts(){
+    this.districtsSerivce.getDistricts().subscribe({
+      next: (resp)=>{
+        this.districts = resp.data.map((d: any) => ({ id: d.id, name: d.name}));
+      },
+      error: () => {
+      }
+    });
   }
 
   onGoClick() {
     this.loadChart();
   }
 
+  onBack() {
+    this.router.navigate(['/']);
+  }
+
+  
   loadChart() {
     this.loading = true;
     this.error = '';

@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartOptions, ChartDataset } from 'chart.js';
 import { ThemeAvgService } from './theme-avg.service';
+import { DistrictsService } from '../districts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-theme-avg',
@@ -48,12 +50,15 @@ export class ThemeAvg implements OnInit {
           font: { size: 14, weight: 'bold' }
         },
         min: 0,
-        max: 100 // Set max as per your data
+        max: 100 
       }
     }
   };
 
-  constructor(private themeAvgService: ThemeAvgService) {}
+  constructor(
+    private themeAvgService: ThemeAvgService,
+    private districsService: DistrictsService,
+    private router: Router) {}
 
   ngOnInit() {
     this.loadDistricts();
@@ -64,12 +69,19 @@ export class ThemeAvg implements OnInit {
     this.loadChartData();
   }
 
+  onBack(){
+    this.router.navigate(["/"]);
+  }
+
   loadDistricts() {
-    this.districts = [
-      { id: '1', name: 'District 1' },
-      { id: '2', name: 'District 2' },
-      { id: '198', name: 'District 3' }
-    ];
+    this.districsService.getDistricts().subscribe({
+      next: (resp) => {
+        this.districts = resp.data.map((d: any) => ({ id: d.id, name: d.name}));
+      },
+      error: () => {
+
+      }
+    });
   }
 
   loadChartData() {
